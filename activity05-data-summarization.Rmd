@@ -1,6 +1,6 @@
 ---
 title: "Activity 5"
-author: "Name"
+author: "Stella Sterling"
 output: github_document
 ---
 
@@ -79,7 +79,10 @@ There are a number of ways to create a code chunk:
 Below, create a code chunk and name it `median_earnings`.
 Make sure there is an empty line above and below the code chunk.
 
-
+```{r median_earnings}
+college_recent_grads %>% 
+  summarize(median_all_majors = median(median))
+```
 
 In your newly created R code chunk, verify that the median income for all majors was $36,000.
 Using the `college_recent_grads` dataset and functions from `{dplyr}`, verify the *median* summary statistic for the variable median earnings of full-time, year-round workers (`median`).
@@ -95,12 +98,21 @@ Be careful when you name your output summaries as we are dealing with things tha
 When I and obtaining numerical summaries for variables, I like to include the variable name in my summary name (e.g., `mean_med_earnings = mean(median)`).
 Create a code chunk and name it `summary_earnings`.
 
+```{r summary_earnings}
+college_recent_grads %>% 
+  summarize(n = n(),
+            avg = mean(median),
+            sd = sd(median),
+            min = min(median),
+            med = median(median),
+            max = max(median))
+```
 
 
 Provide a discussion on what you believe the distribution of median earnings will look like.
 You should discuss the center, spread, and potential shape only using these values - I do NOT want to see any data visualizations here.
 
-**Response**:
+**Response**: I think the distribution would be fairly normal as the median and average are similar. The max might be an outlier and may cause a slight right skew.
 
 
 ### Median Earnings by Major Category
@@ -110,12 +122,23 @@ Using the `college_recent_grads` dataset and functions from `{dplyr}`, obtain si
 *Arrange* this summary table by the median earning.
 Create a code chunk and name it `major_earnings`.
 
+```{r major_earnings}
+college_recent_grads %>% 
+  group_by(major_category) %>% 
+  summarize(n = n(),
+            avg = mean(median),
+            sd = sd(median),
+            min = min(median),
+            med = median(median),
+            max = max(median)) %>% 
+  arrange(desc(med))
+```
 
 
 Provide a discussion on how each major compares to the overall distribution.
 You should discuss the center, spread, and potential shape only using these summary values - I do NOT want to see any data visualizations here.
 
-**Response**:
+**Response**: Engineering has the most range in their earnings, with a min of 40,000 and a max of 110,000.
 
 
 Before we continue, add the following to the end of your pipeline (you will need to pipe first) in your `major_earnings` code chunk:
